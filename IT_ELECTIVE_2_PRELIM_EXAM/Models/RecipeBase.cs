@@ -11,7 +11,6 @@ public class RecipeBase
     public string Title { get; set; }
     public int PrepTimeMinutes { get; set; }
     public string Difficulty { get; set; }
-
     protected List<string> steps;
 
     public RecipeBase()
@@ -45,3 +44,4 @@ public class RecipeBase
         return new List<string>(steps);
     }
 }
+
