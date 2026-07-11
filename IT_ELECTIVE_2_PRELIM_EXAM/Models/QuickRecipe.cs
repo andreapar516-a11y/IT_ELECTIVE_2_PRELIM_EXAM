@@ -24,9 +24,10 @@ public class QuickRecipe : RecipeBase
         MaxMinutes = maxMinutes;
     }
 
-    // BUG: This uses 'new' instead of 'override' - fix this!
-    public new string GetRecipeInfo()
+    // EXERCISE 8: Use override instead of new
+    public override string GetRecipeInfo()
     {
         return $"{base.GetRecipeInfo()} | Quick: Under {MaxMinutes} min";
     }
 }
+
