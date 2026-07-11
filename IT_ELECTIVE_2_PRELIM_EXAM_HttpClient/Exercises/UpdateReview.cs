@@ -1,3 +1,7 @@
+using System.Net;
+using System.Text;
+using System.Text.Json;
+
 namespace IT_ELECTIVE_2_PRELIM_EXAM_HttpClient.Exercises;
 
 // EXERCISE 7: PUT Update Review
@@ -14,15 +18,31 @@ namespace IT_ELECTIVE_2_PRELIM_EXAM_HttpClient.Exercises;
 
 public static class UpdateReview
 {
-    public static async Task Run(System.Net.Http.HttpClient client)
+    public static async Task Run(HttpClient client)
     {
-        // TODO: Create JSON string with id, title, body, and userId
-        // TODO: Create StringContent with the JSON and Content-Type "application/json"
-        // TODO: Send PUT request to https://jsonplaceholder.typicode.com/posts/1
-        // TODO: Assert status code is 200 OK
-        // TODO: Parse the response JSON
-        // TODO: Assert the title is "Updated Review"
+        // API endpoint
+        string url = "https://jsonplaceholder.typicode.com/posts/1";
 
-        throw new NotImplementedException();
+        // Correct JSON string (proper quotes)
+        string jsonBody = @"{""id"": 1, ""title"": ""Updated"", ""body"": ""Even better than before!"", ""userId"": 1}";
+
+        // Create content with correct media type
+        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+        var response = await client.PutAsync(url, content);
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            throw new Exception($"Expected 200 OK, got {response.StatusCode}");
+        }
+
+        string responseJson = await response.Content.ReadAsStringAsync();
+        using var doc = JsonDocument.Parse(responseJson);
+
+        string title = doc.RootElement.GetProperty("title").GetString() ?? "";
+        if (title != "Updated")
+        {
+            throw new Exception($"Expected title 'Updated', got '{title}'");
+        }
     }
 }
