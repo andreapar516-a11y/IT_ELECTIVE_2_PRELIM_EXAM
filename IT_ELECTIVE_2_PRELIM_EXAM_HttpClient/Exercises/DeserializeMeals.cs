@@ -1,3 +1,6 @@
+using System.Net;
+using System.Text.Json;
+
 namespace IT_ELECTIVE_2_PRELIM_EXAM_HttpClient.Exercises;
 
 // EXERCISE 10: GET Deserialize Multiple Meals
@@ -23,15 +26,25 @@ namespace IT_ELECTIVE_2_PRELIM_EXAM_HttpClient.Exercises;
 
 public static class DeserializeMeals
 {
-    public static async Task Run(System.Net.Http.HttpClient client)
+    public static async Task Run(HttpClient client)
     {
-        // TODO: Send GET request to https://themealdb.com/api/json/v1/1/search.php?f=a
-        // TODO: Assert status code is 200 OK
-        // TODO: Parse the response JSON
-        // TODO: Get the "meals" array
-        // TODO: Assert the array has more than 0 items
-        // TODO: Loop through and print each meal's strMeal
+        // ? Correct URL
+        string url = "https://www.themealdb.com/api/json/v1/1/search.php?f=a";
+        var response = await client.GetAsync(url);
 
-        throw new NotImplementedException();
+        if (response.StatusCode != HttpStatusCode.OK)
+            throw new Exception($"Expected 200 OK, got {response.StatusCode}");
+
+        string json = await response.Content.ReadAsStringAsync();
+        using var doc = JsonDocument.Parse(json);
+        var meals = doc.RootElement.GetProperty("meals");
+
+        if (meals.ValueKind != JsonValueKind.Array || meals.GetArrayLength() <= 0)
+            throw new Exception("No meals starting with letter 'a' found");
+
+        foreach (var meal in meals.EnumerateArray())
+        {
+            Console.WriteLine($"- {meal.GetProperty("strMeal").GetString()}");
+        }
     }
 }
