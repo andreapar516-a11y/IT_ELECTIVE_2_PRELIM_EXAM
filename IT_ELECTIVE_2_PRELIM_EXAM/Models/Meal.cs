@@ -11,37 +11,76 @@ namespace IT_ELECTIVE_2_PRELIM_EXAM.Models;
 
 public class Meal
 {
-    public string name;
-    public string category;
-    public string area;
-    public string instructions;
-    public string thumbnail;
-    public string tags;
+    private string _name;
+    private string _category;
+    private string _area;
+    private string _instructions;
+    private string _thumbnail;
+    private string _tags;
+    private int _prepTimeMinutes;
 
-    // EXERCISE 1: Fix these stub properties to properly get/set from private fields
-    // After fixing, make the fields above PRIVATE
-    public string Name { get => ""; set { } }
-    public string Category { get => ""; set { } }
-    public string Area { get => ""; set { } }
+    public string Name
+    {
+        get => _name;
+        set => _name = value;
+    }
+
+    public string Category
+    {
+        get => _category;
+        set => _category = value;
+    }
+
+    public string Area
+    {
+        get => _area;
+        set => _area = value;
+    }
+
+    public string Instructions
+    {
+        get => _instructions;
+        set => _instructions = value;
+    }
+
+    public string Thumbnail
+    {
+        get => _thumbnail;
+        set => _thumbnail = value;
+    }
+
+    public string Tags
+    {
+        get => _tags;
+        set => _tags = value;
+    }
+    public int PrepTimeMinutes
+    {
+        get => _prepTimeMinutes;
+        set => _prepTimeMinutes = value;
+    }
 
     public Meal()
     {
-        name = "";
-        category = "";
-        area = "";
-        instructions = "";
-        thumbnail = "";
-        tags = "";
+        _name = "";
+        _category = "";
+        _area = "";
+        _instructions = "";
+        _thumbnail = "";
+        _tags = "";
+
+        _prepTimeMinutes = 0;
     }
 
     public Meal(string name, string category, string area)
     {
-        this.name = name;
-        this.category = category;
-        this.area = area;
-        this.instructions = "";
-        this.thumbnail = "";
-        this.tags = "";
+        _name = name;
+        _category = category;
+        _area = area;
+        _instructions = "";
+        _thumbnail = "";
+        _tags = "";
+        _prepTimeMinutes = 0;
     }
 
     public override string ToString()
