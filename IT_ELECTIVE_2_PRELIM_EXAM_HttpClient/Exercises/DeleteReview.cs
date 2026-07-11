@@ -9,13 +9,19 @@ namespace IT_ELECTIVE_2_PRELIM_EXAM_HttpClient.Exercises;
 //
 // Hint: Use await client.DeleteAsync(url)
 
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+
 public static class DeleteReview
 {
-    public static async Task Run(System.Net.Http.HttpClient client)
+    public static async Task Run(HttpClient client)
     {
-        // TODO: Send DELETE request to https://jsonplaceholder.typicode.com/posts/1
-        // TODO: Assert status code is 200 OK
+        string url = "https://jsonplaceholder.typicode.com/posts/1";
+        var response = await client.DeleteAsync(url);
 
-        throw new NotImplementedException();
+        if (response.StatusCode != HttpStatusCode.OK)
+            throw new Exception($"Expected 200 OK, got {response.StatusCode}");
     }
 }
